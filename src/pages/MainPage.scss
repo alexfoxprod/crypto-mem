@@ -1,0 +1,46 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 96px;
+  padding: 116px 180px 0;
+  box-sizing: border-box;
+
+  &__title {
+    @include styleText(56px, 400, 130%, $black_color, 0, none);
+    text-align: center;
+    width: 600px;
+  }
+
+  &__content {
+    display: flex;
+    gap: 150px;
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+
+      &__button {
+        background-color: rgba(255, 255, 255, 0);
+        border: none;
+        background-image: url("../assets/images/shape.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 527px;
+        height: 70px;
+        box-sizing: border-box;
+        font-family: "Kalam", cursive;
+        @include styleText(29px, 700, 100%, $black_color, 0, capitalize);
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+          font-size: 32px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
