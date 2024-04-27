@@ -11,12 +11,14 @@ const MainPage = () => {
                     min={100}
                     max={1000}
                     label="Investment"
+                    unit="$"
                 />
                 <Slider
                     min={2012}
                     max={2024}
                     label="Investment date"
                 />
+
                 <button
                     type="submit"
                     className="main__content__form__button">
