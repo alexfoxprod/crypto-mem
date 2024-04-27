@@ -1,5 +1,6 @@
 import React from 'react'
 import Slider from "../components/Slider/Slider";
+import ApiComponent from '../components/ApiComponent/ApiComponent';
 
 const MainPage = () => {
   return (
@@ -24,6 +25,7 @@ const MainPage = () => {
                 </button>
             </form>
         </div>
+        <ApiComponent/>
     </div>
   )
 }
