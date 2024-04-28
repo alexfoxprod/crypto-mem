@@ -1,22 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 const Slider = ({min, max, label, unit = ""}) => {
     const [value, setValue] = useState(min);
-    const [range, setRange] = useState(calculateRange())
+    const [range, setRange] = useState(0);
+
+
+    // Обрахування довжини .highlight (берюзової полоски)
+    const calculateRange = useCallback(() => {
+        return ((value - min) / (max - min)) * 100
+    }, [value, min, max]);
+
+    // Встановлення value для слайдера
+    const handleSlider = useCallback((event) => {
+        setValue(event.target.value);
+    }, []);
 
     useEffect(() => {
         setRange(calculateRange());
-    }, [value]);
-
-    // Обрахування довжини .highlight (берюзової полоски)
-    function calculateRange() {
-        return ((value - min) / (max - min)) * 100
-    }
-
-    // Встановлення value для слайдера
-    const handleSlider = (event) => {
-        setValue(event.target.value);
-    }
+    }, [calculateRange]);
 
     return (
         <div className="slider-container">
@@ -40,7 +41,7 @@ const Slider = ({min, max, label, unit = ""}) => {
                 min={min}
                 max={max}
                 value={value}
-                onInput={handleSlider}
+                onChange={handleSlider}
             />
         </div>
     );
