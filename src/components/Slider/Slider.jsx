@@ -17,7 +17,7 @@ const Slider = ({min, max, label, unit = ""}) => {
 
     useEffect(() => {
         setRange(calculateRange());
-    }, [value, calculateRange]);
+    }, [calculateRange]);
 
     return (
         <div className="slider-container">
@@ -41,7 +41,7 @@ const Slider = ({min, max, label, unit = ""}) => {
                 min={min}
                 max={max}
                 value={value}
-                onInput={handleSlider}
+                onChange={handleSlider}
             />
         </div>
     );
