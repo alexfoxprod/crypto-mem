@@ -5,14 +5,14 @@
   position: relative;
 
   & label {
-    @include styleText(20px, 700, 150%, $black_color, 0, none);
+    @include styleText(16px, 700, 150%, $black_color, 0, none);
     margin-bottom: 8px;
   }
 
   &__captions {
     display: flex;
     justify-content: space-between;
-    @include styleText(16px, 400, 150%, $black_color, 0, none);
+    @include styleText(14px, 400, 150%, $black_color, 0, none);
   }
 
   &__highlight {
@@ -80,4 +80,22 @@
 }
 
 
+@media screen and (min-width: $min-tablet) {
+  .slider-container {
+    & label {
+      @include styleText(18px, 700, 150%, $black_color, 0, none);
+    }
+    &__captions {
+      @include styleText(16px, 400, 150%, $black_color, 0, none);
+    }
+  }
+}
 
+
+@media screen and (min-width: $min-desktop) {
+  .slider-container {
+    & label {
+      @include styleText(20px, 700, 150%, $black_color, 0, none);
+    }
+  }
+}

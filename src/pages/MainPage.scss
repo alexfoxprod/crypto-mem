@@ -1,27 +1,44 @@
 .main {
+  min-width: 320px;
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 96px;
-  padding: 116px 180px 0;
+  gap: 32px;
   box-sizing: border-box;
+  padding: clamp(32px, 13vw, 64px) 16px;
 
   &__title {
-    @include styleText(56px, 400, 130%, $black_color, 0, none);
+    @include styleText(clamp(30px, 7vw, 38px), 400, 130%, $black_color, 0, none);
     text-align: center;
-    width: 600px;
+    width: 100vw -32px;
+    max-width: 450px;
   }
 
   &__content {
     display: flex;
-    gap: 150px;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+
+    &__result {
+      max-width: 350px;
+      width: 70vw;
+      aspect-ratio: 471 / 388;
+      background-color: black;
+    }
 
     &__form {
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 60px;
+
+      &__sliders {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
 
       &__button {
         background-color: rgba(255, 255, 255, 0);
@@ -29,16 +46,68 @@
         background-image: url("../assets/images/shape.svg");
         background-size: cover;
         background-repeat: no-repeat;
-        width: 527px;
-        height: 70px;
+        width: clamp(288px, 85vw, 530px);
+        aspect-ratio: 288 / 38;
         box-sizing: border-box;
         font-family: "Kalam", cursive;
-        @include styleText(29px, 700, 100%, $black_color, 0, capitalize);
+        @include styleText(clamp(18px, 4.5vw, 24px), 700, 100%, $black_color, 0, capitalize);
         transition: 0.2s ease-in-out;
 
         &:hover {
           font-size: 32px;
           cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+
+
+@media screen and (min-width: $min-tablet) {
+  .main {
+    gap: 60px;
+    &__title {
+      @include styleText(44px, 400, 130%, $black_color, 0, none);
+      width: auto;
+      max-width: 500px;
+    }
+    &__content {
+      gap: 80px;
+      justify-content: center;
+      &__result {
+        width: clamp(370px, 32.7vw, 471px);
+        max-width: 471px;
+      }
+      &__form {
+        justify-content: center;
+        gap: 6.5vw;
+        &__sliders {
+          gap: 40px;
+        }
+        &__button {
+          width: 530px;
+          @include styleText(clamp(24px, 2.2vw, 29px), 700, 100%, $black_color, 0, capitalize);
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (min-width: $min-desktop) {
+  .main {
+    &__title {
+      @include styleText(56px, 400, 130%, $black_color, 0, none);
+      max-width: 600px;
+    }
+    &__content {
+      flex-direction: row-reverse;
+      gap: 150px;
+      &__form {
+        gap: 90px;
+        &__button {
+          @include styleText(29px, 700, 100%, $black_color, 0, capitalize);
         }
       }
     }
