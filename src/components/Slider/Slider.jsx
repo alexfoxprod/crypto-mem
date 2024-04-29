@@ -1,9 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
 
-const Slider = ({min, max, label, unit = ""}) => {
+const Slider = ({min, max, label, unit = "", onChange}) => {
     const [value, setValue] = useState(min);
     const [range, setRange] = useState(0);
-
 
     // Обрахування довжини .highlight (берюзової полоски)
     const calculateRange = useCallback(() => {
@@ -12,8 +11,12 @@ const Slider = ({min, max, label, unit = ""}) => {
 
     // Встановлення value для слайдера
     const handleSlider = useCallback((event) => {
-        setValue(event.target.value);
-    }, []);
+        const newValue = parseFloat(event.target.value);
+        setValue(newValue); // Зберігаємо нове значення
+        if (onChange) {
+            onChange(newValue); // Передаємо нове значення
+        }
+    }, [onChange]);
 
     useEffect(() => {
         setRange(calculateRange());
