@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import './Calendar.scss';
 import dayjs from 'dayjs';
 
-
+// Поточний місяць за замовчуванням
 const generateDate = (
 
     month = dayjs().month(), 
@@ -44,11 +44,49 @@ const generateDate = (
     return arrayOfDate;
 }
 
+// Індекс місяця та рік (4, 2024)
 const Calendar = ({ month, year }) => {
+
+    const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    const months = [
+        "JANUARY",
+        "FEBRUARY",
+        "MARCH",
+        "APRIL",
+        "MAY",
+        "JUNE",
+        "JULY",
+        "AUGUST",
+        "SEPTEMBER",
+        "OCTOBER",
+        "NOVEMBER",
+        "DECEMBER"
+    ];
 
     return (
         <div className='calendar-container'>
-            <h1 className='calendar-container__h1'>leawkmf</h1>
+            <div className='calendar-container__month'>
+                <div>
+                    <h1>{months[month]} {year}</h1>
+                </div>
+            </div>
+            <div className='calendar-container__days'>
+                {days.map((day, index) => {
+                    return  <h1 key={index}>{day}</h1>
+                })}
+            </div>
+
+            <div className='calendar-container__dates'>
+                {generateDate(month, year).map(({ date, currentMonth }, index) => {
+
+                    return (
+                        <div key={index}>
+                            <h1 className={currentMonth ? '' : 
+                            'calendar-container__dates__not-current-month'}>{date.date()}</h1>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     )
 }
