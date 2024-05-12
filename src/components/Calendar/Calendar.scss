@@ -1,31 +1,58 @@
 .calendar-container {
-    height: 100%;
     height: 177.93px;
-    width: 100%;
     width: 197.15px;
-    background-image: url("../../assets/calendar/Border.svg");
+    background-image: url("../../assets/calendar/border.svg");
+    background-color: white;
     background-size: cover;
+    overflow: hidden; 
+    position: relative;
+    z-index: 1;
 
     &__h1 {
         color: white;
     }
 
+    &__month {
+        display: flex;
+        justify-content: center;
+        height: 24px;
+        margin: 7px 0;
+    }
+    &__month > div {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+    }
+
     &__days {
-        width: 100%;
         display: grid;
+        place-items: center;
         grid-template-columns: repeat(7, minmax(0, 1fr));
+        width: 189px;
+        height: 26px;
     }
 
     &__dates {
-        width: 100%;
-        height: 100%;
         display: grid;
+        // place-items: center;
         grid-template-columns: repeat(7, minmax(0, 1fr));
+        width: 188px;
+        height: 112px;
         font-size: 12px;
         cursor: pointer;
-
+        
         &__not-current-month {
             color: rgb(2,2,2, 0.4);
         }
+        &__selected-date {
+            background-image: url('../../assets/calendar/selection.svg');
+            background-size: cover;
+        }
+    
+    }
+    &__dates > div {
+        display: flex;
+        justify-content: center;
+        width: 100%;
     }
 }

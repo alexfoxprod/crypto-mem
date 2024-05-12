@@ -1,6 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './Calendar.scss';
 import dayjs from 'dayjs';
+import arrowLeft from "../../assets/calendar/chevron-left.svg";
+import arrowRight from "../../assets/calendar/chevron-right.svg";
+import selectedBg from '../../assets/calendar/selection.svg';
+//<img src={selectedBg}/>
 
 // Поточний місяць за замовчуванням
 const generateDate = (
@@ -44,8 +48,13 @@ const generateDate = (
     return arrayOfDate;
 }
 
+// Зʼєднання класів в один
+function cn (...classes) {
+    return classes.filter(Boolean).join(' ');
+}
+
 // Індекс місяця та рік (4, 2024)
-const Calendar = ({ month, year }) => {
+const Calendar = ({ month, year, onChange }) => {
 
     const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     const months = [
@@ -63,11 +72,24 @@ const Calendar = ({ month, year }) => {
         "DECEMBER"
     ];
 
+    const [selectedDate, setSelectedDate] = useState(dayjs());
+
+    const handleDateClick = (date) => {
+        setSelectedDate(date); 
+        console.log(date.toDate());
+    }
+
     return (
         <div className='calendar-container'>
             <div className='calendar-container__month'>
                 <div>
+                    <img src={arrowLeft} alt='previous month button' 
+                    onClick={(e) => onChange(e)} className='arrow-left'/>
+
                     <h1>{months[month]} {year}</h1>
+
+                    <img src={arrowRight} alt='next month button' 
+                    onClick={(e) => onChange(e)} className='arrow-right'/>
                 </div>
             </div>
             <div className='calendar-container__days'>
@@ -80,9 +102,14 @@ const Calendar = ({ month, year }) => {
                 {generateDate(month, year).map(({ date, currentMonth }, index) => {
 
                     return (
-                        <div key={index}>
-                            <h1 className={currentMonth ? '' : 
-                            'calendar-container__dates__not-current-month'}>{date.date()}</h1>
+                        <div key={index}
+                        className={selectedDate.toDate().toDateString() === date.toDate().toDateString() ? 'calendar-container__dates__selected-date' : ''}
+                        onClick={() => handleDateClick(date)}>
+                            <h1 className={cn(
+                                currentMonth ? '' : 'calendar-container__dates__not-current-month',
+                              //  selectedDate.toDate().toDateString() === date.toDate().toDateString() ? 'calendar-container__dates__selected-date' : ''
+                            )}
+                            >{date.date()}</h1>
                         </div>
                     )
                 })}

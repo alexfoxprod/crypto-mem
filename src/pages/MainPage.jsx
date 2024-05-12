@@ -76,6 +76,20 @@ const MainPage = () => {
       setProfit(calculatedProfit);
     }
   }, [latestRate, rateByDate, investment, investmentDate]);
+
+
+  const handleCalendarMonthChange = (e) => {
+    const elementClass = e.target.classList;
+
+    if (elementClass.contains('arrow-left')) {
+      console.log('left');
+      //month--
+    } else {
+      console.log('right');
+      //month++
+    }
+  }
+
   return (
     <div className="main">
       <h1 className="main__title">How much have you lost/earned on Bitcoin?</h1>
@@ -85,7 +99,7 @@ const MainPage = () => {
         </p>
         <div className="main__content__result">
 
-        <Calendar month={4} year={2024} />
+        <Calendar month={4} year={2024} onChange={handleCalendarMonthChange}/>
 
         </div>
         <form className="main__content__form">
