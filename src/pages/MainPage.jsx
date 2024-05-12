@@ -12,7 +12,10 @@ const MainPage = () => {
   const [profit, setProfit] = useState(0);
   const [investment, setInvestment] = useState(100);
   const [investmentDate, setInvestmentDate] = useState("2014-01-01");
+  const [hiddenResult, setHiddenResult] = useState(false);
+  const [memeClass, setMemeClass] = useState('');
 
+  
   const sliderValueToDate = (value) => {
     // Додає значення днів до стартової дати
     const newDate = new Date(startDate.getTime() + value * 1000 * 60 * 60 * 24); 
@@ -59,19 +62,60 @@ const MainPage = () => {
       await fetchApi();
       await fetchApi2();
       if (latestRate && rateByDate && investment > 0) {
-        const calculatedProfit = (investment * rateByDate) / latestRate;
+        const calculatedProfit = ((investment * rateByDate) / latestRate).toFixed(2);
         setProfit(calculatedProfit);
       }
     } else {
       console.error("Investment date is not set");
     }
   };
+
+  // useEffect(() => {
+  //   if (profit >= 70000) {
+  //     setMemeClass('main__content__result__border__meme8')
+  //   } else if (profit >= 60000) {
+  //     setMemeClass('main__content__result__border__meme7')
+  //   } else if (profit >= 50000) {
+  //     setMemeClass('main__content__result__border__meme6')
+  //   } else if (profit >= 40000) {
+  //     setMemeClass('main__content__result__border__meme5')
+  //   } else if (profit >= 30000) {
+  //     setMemeClass('main__content__result__border__meme4')
+  //   } else if (profit >= 20000) {
+  //     setMemeClass('main__content__result__border__meme3')
+  //   } else if (profit >= 10000) {
+  //     setMemeClass('main__content__result__border__meme2')
+  //   } else {
+  //     setMemeClass('main__content__result__border__meme1')
+  //   }
+  // }, [profit]);
+
+  useEffect(() => {
+    const memeClass = profit >= 70000 ? 'main__content__result__border__meme8' :
+                      profit >= 60000 ? 'main__content__result__border__meme7' :
+                      profit >= 50000 ? 'main__content__result__border__meme6' :
+                      profit >= 40000 ? 'main__content__result__border__meme5' :
+                      profit >= 30000 ? 'main__content__result__border__meme4' :
+                      profit >= 20000 ? 'main__content__result__border__meme3' :
+                      profit >= 10000 ? 'main__content__result__border__meme2' :
+                                        'main__content__result__border__meme1';
+    setMemeClass(memeClass);
+  }, [profit]);
+  
+
+  useEffect(() => {
+    if (profit !== 0 && !isNaN(profit)) {
+      setHiddenResult(true)
+    }
+  }, [profit]);
+
   useEffect(() => {
     if (latestRate !== null && rateByDate !== null) {
       console.log("latestRate", latestRate);
       console.log("rateByDate", rateByDate);
       console.log("investment", investment);
-      const calculatedProfit = (investment * rateByDate) / latestRate;
+      console.log("profit", profit);
+      const calculatedProfit = ((investment * rateByDate) / latestRate).toFixed(2);
       setProfit(calculatedProfit);
     }
   }, [latestRate, rateByDate, investment, investmentDate]);
@@ -79,10 +123,14 @@ const MainPage = () => {
     <div className="main">
       <h1 className="main__title">How much have you lost/earned on Bitcoin?</h1>
       <div className="main__content">
-        <p className="main__content__text">
-          {profit !== null && !isNaN(profit) && <span>Profit: {profit}</span>}
-        </p>
-        <div className="main__content__result"></div>
+        <div className="main__content__result" style={{ display: hiddenResult ? 'block' : 'none' }}>
+          <p className="main__content__result__text">
+            {profit !== null && !isNaN(profit) && <span>You lost {profit}$</span>}
+          </p>
+          <div className="main__content__result__border">
+            <div className={`main__content__result__border__meme ${memeClass}`}></div>
+          </div>
+        </div>
         <form className="main__content__form">
           <div className="main__content__form__sliders">
             <Slider
