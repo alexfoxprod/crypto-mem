@@ -26,7 +26,32 @@
       max-width: 350px;
       width: 70vw;
       aspect-ratio: 471 / 388;
-      background-color: white;
+      display: flex;
+      flex-direction: column;
+      
+      &__text {
+        @include styleText(clamp(16px, 5vw, 24px), 700, 130%, $black_color, 0, none);
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      &__border {
+        background-image: url("../assets/images/border.png");
+        background-color: $white_color;
+        background-size: cover;
+        aspect-ratio: 477.76 / 330.31;
+        position: relative;
+        z-index: 1;
+        &__meme {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          aspect-ratio: 328 / 267;
+          z-index: 2;
+          width: 75%;
+          background-size: cover;
+        }
+      }
     }
 
     &__form {
@@ -52,11 +77,6 @@
         font-family: "Kalam", cursive;
         @include styleText(clamp(18px, 4.5vw, 24px), 700, 100%, $black_color, 0, capitalize);
         transition: 0.2s ease-in-out;
-
-        &:hover {
-          font-size: 32px;
-          cursor: pointer;
-        }
       }
     }
   }
@@ -88,6 +108,10 @@
         &__button {
           width: 530px;
           @include styleText(clamp(24px, 2.2vw, 29px), 700, 100%, $black_color, 0, capitalize);
+          &:hover {
+            font-size: 32px;
+            cursor: pointer;
+          }
         }
       }
     }
