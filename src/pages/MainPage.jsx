@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Slider from "../components/Slider/Slider";
 // import ApiComponent from '../components/ApiComponent/ApiComponent';
+import Calendar from "../components/Calendar/Calendar";
 
 const MainPage = () => {
   const startDate = new Date("2014-01-01"); // Початкова дата
@@ -119,6 +120,20 @@ const MainPage = () => {
       setProfit(calculatedProfit);
     }
   }, [latestRate, rateByDate, investment, investmentDate]);
+
+
+  const handleCalendarMonthChange = (e) => {
+    const elementClass = e.target.classList;
+
+    if (elementClass.contains('arrow-left')) {
+      console.log('left');
+      //month--
+    } else {
+      console.log('right');
+      //month++
+    }
+  }
+
   return (
     <div className="main">
       <h1 className="main__title">How much have you lost/earned on Bitcoin?</h1>
