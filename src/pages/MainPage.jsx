@@ -135,7 +135,7 @@ const MainPage = () => {
       } else {
         setCalMonth(calMonth-1);
       }
-      // setSliderMonth(sliderMonth-1);
+      // setInvestmentDate(investmentDate-1); 
     } else {
       if (calMonth === 11) {
         setCalMonth(0);
@@ -143,7 +143,7 @@ const MainPage = () => {
       } else {
         setCalMonth(calMonth+1);
       }
-      // setSliderMonth(sliderMonth+1);
+      // setInvestmentDate(investmentDate+1); 
     }
   }
 
@@ -156,7 +156,8 @@ const MainPage = () => {
             {profit !== null && !isNaN(profit) && <span>You lost {profit}$</span>}
           </p>
           <div className="main__content__result__border">
-            <div className={`main__content__result__border__meme ${memeClass}`}></div>
+            {/* <div className={`main__content__result__border__meme ${memeClass}`}></div> */}
+            <Calendar month={calMonth} year={calYear} onChange={handleCalendarMonthChange}/>
           </div>
         </div>
         <form className="main__content__form">
@@ -174,6 +175,7 @@ const MainPage = () => {
               label="Investment date"
               value={sliderValueToDate(maxSliderValue)}
               onChange={handleSliderChange}
+              valueComponent={<Calendar month={calMonth} year={calYear} onChange={handleCalendarMonthChange}/>}
             />
           </div>
 
