@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
+import Calendar from '../Calendar/Calendar';
 
-const Slider = ({min, max, leftValue, rightValue, label, unit = "", onChange}) => {
+const Slider = ({min, max, leftValue, rightValue, label, unit = "", onChange, valueComponent}) => {
     const [value, setValue] = useState(min);
     const [range, setRange] = useState(0);
 
@@ -32,9 +33,11 @@ const Slider = ({min, max, leftValue, rightValue, label, unit = "", onChange}) =
             </div>
             <div className="slider-container__highlight" style={{"width": range + "%"}}></div>
             <div className="slider-container__value" style={{"left": range + "%"}}>
+                {valueComponent || 
                 <div className="slider-container__value__container">
                     <span>{value + unit}</span>
                 </div>
+                }
             </div>
 
             <input

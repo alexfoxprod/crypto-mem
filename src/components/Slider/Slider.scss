@@ -23,6 +23,7 @@
     background-color: $accent_color;
     border-radius: 99px 0 0 99px;
     z-index: 1;
+    pointer-events: none;
   }
 
   &__value {
@@ -33,6 +34,8 @@
     position: absolute;
     bottom: 20px;
     left: -35px;
+    right: 98px;
+    z-index: 1;
 
     &__container {
       background-image: url("../../assets/images/background-value.svg");
@@ -68,7 +71,7 @@
       background-repeat: no-repeat;
       cursor: pointer;
       position: relative;
-      z-index: 2;
+      z-index: 1;
     }
   }
 
