@@ -23,6 +23,7 @@
     background-color: $accent_color;
     border-radius: 99px 0 0 99px;
     z-index: 1;
+    pointer-events: none;
   }
 
   &__value {
