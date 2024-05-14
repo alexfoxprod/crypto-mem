@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import Slider from "../components/Slider/Slider";
 // import ApiComponent from '../components/ApiComponent/ApiComponent';
 import Calendar from "../components/Calendar/Calendar";
+import { differenceInMonths } from 'date-fns';
 
 const MainPage = () => {
   const startDate = new Date("2014-01-01"); // Початкова дата
   const today = new Date(); // Сьогоднішня дата
 
-  const maxSliderValue = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+  // const maxSliderValue = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+  const maxSliderValue = differenceInMonths(today, startDate);
   const [latestRate, setLatestRate] = useState(0);
   const [rateByDate, setRateByDate] = useState(0);
   const [profit, setProfit] = useState(0);
@@ -17,14 +19,23 @@ const MainPage = () => {
   const [memeClass, setMemeClass] = useState('');
 
   
+  // const sliderValueToDate = (value) => {
+  //   // Додає значення днів до стартової дати
+  //   const newDate = new Date(startDate.getTime() + value * 1000 * 60 * 60 * 24); 
+  //   const year = newDate.getFullYear();
+  //   const month = String(newDate.getMonth() + 1).padStart(2, '0'); 
+  //   const day = String(newDate.getDate()).padStart(2, '0');
+  //   return `${year}-${month}-${day}`; // Повертає дату у форматі `YYYY-MM-DD`
+  // };
+
   const sliderValueToDate = (value) => {
-    // Додає значення днів до стартової дати
-    const newDate = new Date(startDate.getTime() + value * 1000 * 60 * 60 * 24); 
+    // Додає значення місяців до стартової дати
+    const newDate = new Date(startDate.getFullYear(), startDate.getMonth() + value, 1); 
     const year = newDate.getFullYear();
     const month = String(newDate.getMonth() + 1).padStart(2, '0'); 
-    const day = String(newDate.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`; // Повертає дату у форматі `YYYY-MM-DD`
+    return `${year}-${month}`; // Повертає дату у форматі `YYYY-MM`
   };
+
 
   const handleSliderChange = (value) => {
     const newDate = sliderValueToDate(value); 
@@ -70,26 +81,6 @@ const MainPage = () => {
       console.error("Investment date is not set");
     }
   };
-
-  // useEffect(() => {
-  //   if (profit >= 70000) {
-  //     setMemeClass('main__content__result__border__meme8')
-  //   } else if (profit >= 60000) {
-  //     setMemeClass('main__content__result__border__meme7')
-  //   } else if (profit >= 50000) {
-  //     setMemeClass('main__content__result__border__meme6')
-  //   } else if (profit >= 40000) {
-  //     setMemeClass('main__content__result__border__meme5')
-  //   } else if (profit >= 30000) {
-  //     setMemeClass('main__content__result__border__meme4')
-  //   } else if (profit >= 20000) {
-  //     setMemeClass('main__content__result__border__meme3')
-  //   } else if (profit >= 10000) {
-  //     setMemeClass('main__content__result__border__meme2')
-  //   } else {
-  //     setMemeClass('main__content__result__border__meme1')
-  //   }
-  // }, [profit]);
 
   useEffect(() => {
     const memeClass = profit >= 70000 ? 'main__content__result__border__meme8' :
@@ -165,6 +156,8 @@ const MainPage = () => {
             <Slider
               min={100}
               max={1000}
+              leftValue="100"
+              rightValue="1000"
               label="Investment"
               unit="$"
               onChange={handleInvestmentChange}
@@ -172,6 +165,8 @@ const MainPage = () => {
             <Slider
               min={0}
               max={maxSliderValue}
+              leftValue="2014"
+              rightValue="2024"
               label="Investment date"
               value={sliderValueToDate(maxSliderValue)}
               onChange={handleSliderChange}
