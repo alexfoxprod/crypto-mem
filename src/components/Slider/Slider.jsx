@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import Calendar from '../Calendar/Calendar';
 
-const Slider = ({min, max, leftValue, rightValue, label, unit = "", onChange}) => {
+const Slider = ({min, max, leftValue, rightValue, label, unit = "", onChange, valueComponent}) => {
     const [value, setValue] = useState(min);
     const [range, setRange] = useState(0);
 

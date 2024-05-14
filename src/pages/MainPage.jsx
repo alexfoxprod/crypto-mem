@@ -147,8 +147,8 @@ const MainPage = () => {
             {profit !== null && !isNaN(profit) && <span>You lost {profit}$</span>}
           </p>
           <div className="main__content__result__border">
-            {/* <div className={`main__content__result__border__meme ${memeClass}`}></div> */}
-            <Calendar month={calMonth} year={calYear} onChange={handleCalendarMonthChange}/>
+            <div className={`main__content__result__border__meme ${memeClass}`}></div>
+            {/* <Calendar month={calMonth} year={calYear} onChange={handleCalendarMonthChange}/> */}
           </div>
         </div>
         <form className="main__content__form">

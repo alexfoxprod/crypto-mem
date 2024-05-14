@@ -11,6 +11,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    bottom: 0px;
+    left: calc((197.15px / 2)*-1);
 
     &__h1 {
         color: white;
