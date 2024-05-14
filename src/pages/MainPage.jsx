@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import Slider from "../components/Slider/Slider";
 // import ApiComponent from '../components/ApiComponent/ApiComponent';
 import Calendar from "../components/Calendar/Calendar";
-import { differenceInMonths } from 'date-fns';
+import dayjs from 'dayjs';
 
 const MainPage = () => {
-  const startDate = new Date("2014-01-01"); // Початкова дата
-  const today = new Date(); // Сьогоднішня дата
+  const startDate = dayjs('2014-01-01'); // Початкова дата
+  const today = dayjs(); // Сьогоднішня дата
 
-  // const maxSliderValue = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-  const maxSliderValue = differenceInMonths(today, startDate);
+  const maxSliderValue = dayjs().diff(startDate, 'month');
   const [latestRate, setLatestRate] = useState(0);
   const [rateByDate, setRateByDate] = useState(0);
   const [profit, setProfit] = useState(0);
@@ -18,29 +17,21 @@ const MainPage = () => {
   const [hiddenResult, setHiddenResult] = useState(false);
   const [memeClass, setMemeClass] = useState('');
 
+  const [calMonth, setCalMonth] = useState(0);
+  const [calYear, setCalYear] = useState(2014);
+
+  const [sliderPosition, setSliderPosition] = useState(0);
+
   
-  // const sliderValueToDate = (value) => {
-  //   // Додає значення днів до стартової дати
-  //   const newDate = new Date(startDate.getTime() + value * 1000 * 60 * 60 * 24); 
-  //   const year = newDate.getFullYear();
-  //   const month = String(newDate.getMonth() + 1).padStart(2, '0'); 
-  //   const day = String(newDate.getDate()).padStart(2, '0');
-  //   return `${year}-${month}-${day}`; // Повертає дату у форматі `YYYY-MM-DD`
-  // };
-
-  const sliderValueToDate = (value) => {
-    // Додає значення місяців до стартової дати
-    const newDate = new Date(startDate.getFullYear(), startDate.getMonth() + value, 1); 
-    const year = newDate.getFullYear();
-    const month = String(newDate.getMonth() + 1).padStart(2, '0'); 
-    return `${year}-${month}`; // Повертає дату у форматі `YYYY-MM`
-  };
-
-
   const handleSliderChange = (value) => {
-    const newDate = sliderValueToDate(value); 
+    const month = value % 12;
+    const year = Math.floor(2014 + value / 12);
+    setCalMonth(month);
+    setCalYear(year);
+
+    const newDate = `${year}-${month}`;
     setInvestmentDate(newDate);
-    console.log("Investment Date:", newDate); // Вивід в консоль
+    console.log("Investment Date:", newDate);
   };
   
   const handleInvestmentChange = (value) => {
@@ -113,30 +104,30 @@ const MainPage = () => {
   }, [latestRate, rateByDate, investment, investmentDate]);
 
 
-  const [calMonth, setCalMonth] = useState(0);
-  const [calYear, setCalYear] = useState(2014);
+  const sliderValueToDate = (value) => {
+    const month = value % 12;
+    const year = (2014 + value / 12).toFixed();
+    return `${year}-${month}`;
+  };
+
 
   const handleCalendarMonthChange = (e) => {
     const elementClass = e.target.classList;
-
+  
     if (elementClass.contains('arrow-left')) {
-      if (calMonth === 0) {
-        setCalMonth(11);
-        setCalYear(calYear-1);
-      } else {
-        setCalMonth(calMonth-1);
+      if (calMonth === 0 && calYear === 2014) {
+        return;
       }
-      // setInvestmentDate(investmentDate-1); 
+      setCalMonth(calMonth === 0 ? 11 : calMonth - 1);
+      setCalYear(calMonth === 0 ? calYear - 1 : calYear);
     } else {
-      if (calMonth === 11) {
-        setCalMonth(0);
-        setCalYear(calYear+1);
-      } else {
-        setCalMonth(calMonth+1);
+      if (calMonth === dayjs().month() && calYear === dayjs().year()) {
+        return;
       }
-      // setInvestmentDate(investmentDate+1); 
+      setCalMonth(calMonth === 11 ? 0 : calMonth + 1);
+      setCalYear(calMonth === 11 ? calYear + 1 : calYear);
     }
-  }
+  } 
 
   return (
     <div className="main">
@@ -148,7 +139,6 @@ const MainPage = () => {
           </p>
           <div className="main__content__result__border">
             <div className={`main__content__result__border__meme ${memeClass}`}></div>
-            {/* <Calendar month={calMonth} year={calYear} onChange={handleCalendarMonthChange}/> */}
           </div>
         </div>
         <form className="main__content__form">
@@ -168,9 +158,10 @@ const MainPage = () => {
               leftValue="2014"
               rightValue="2024"
               label="Investment date"
-              value={sliderValueToDate(maxSliderValue)}
               onChange={handleSliderChange}
               valueComponent={<Calendar month={calMonth} year={calYear} onChange={handleCalendarMonthChange}/>}
+
+              value={'ні на що не впливає'}
             />
           </div>
 

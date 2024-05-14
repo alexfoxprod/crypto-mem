@@ -7,9 +7,9 @@ import arrowRight from "../../assets/calendar/chevron-right.svg";
 // Поточний місяць за замовчуванням
 const generateDate = (
 
-    month = dayjs().month(), 
+    month = 1, 
 
-    year = dayjs().year()
+    year = 2014
 
 ) => {
     const firstDayOfMonth = dayjs().year(year).month(month).startOf('month');
@@ -69,7 +69,7 @@ const Calendar = ({ month, year, onChange }) => {
 
     const handleDateClick = (date) => {
         setSelectedDate(date); 
-        console.log(date.toDate());
+        console.log(dayjs(date).format('YYYY-MM-DD'));
     }
 
     return (
