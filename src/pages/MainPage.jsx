@@ -122,15 +122,28 @@ const MainPage = () => {
   }, [latestRate, rateByDate, investment, investmentDate]);
 
 
+  const [calMonth, setCalMonth] = useState(0);
+  const [calYear, setCalYear] = useState(2014);
+
   const handleCalendarMonthChange = (e) => {
     const elementClass = e.target.classList;
 
     if (elementClass.contains('arrow-left')) {
-      console.log('left');
-      //month--
+      if (calMonth === 0) {
+        setCalMonth(11);
+        setCalYear(calYear-1);
+      } else {
+        setCalMonth(calMonth-1);
+      }
+      // setSliderMonth(sliderMonth-1);
     } else {
-      console.log('right');
-      //month++
+      if (calMonth === 11) {
+        setCalMonth(0);
+        setCalYear(calYear+1);
+      } else {
+        setCalMonth(calMonth+1);
+      }
+      // setSliderMonth(sliderMonth+1);
     }
   }
 
