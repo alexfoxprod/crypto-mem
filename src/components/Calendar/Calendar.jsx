@@ -47,7 +47,7 @@ const generateDate = (
 }
 
 // Індекс місяця та рік (4, 2024)
-const Calendar = ({ month, year, onChange }) => {
+const Calendar = ({ month, year, onChange, onDateSelect }) => {
 
     const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     const months = [
@@ -70,6 +70,9 @@ const Calendar = ({ month, year, onChange }) => {
     const handleDateClick = (date) => {
         setSelectedDate(date); 
         console.log(dayjs(date).format('YYYY-MM-DD'));
+        if (onDateSelect) {
+            onDateSelect(date);
+        }
     }
 
     return (

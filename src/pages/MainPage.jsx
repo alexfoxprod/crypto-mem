@@ -41,7 +41,7 @@ const MainPage = () => {
 
   const fetchApi = async () => {
     const response = await fetch(
-      "https://openexchangerates.org/api/latest.json?app_id=2069bfec40854cce81a65a1b2de83ae9"
+      `https://openexchangerates.org/api/latest.json?app_id=${process.env.REACT_APP_API_KEY}`
     );
     const data = await response.json();
     setLatestRate(data.rates.BTC);
@@ -50,7 +50,7 @@ const MainPage = () => {
   const fetchApi2 = async () => {
     if (investmentDate) {
       const response = await fetch(
-        `https://openexchangerates.org/api/historical/${investmentDate}.json?app_id=2069bfec40854cce81a65a1b2de83ae9`
+        `https://openexchangerates.org/api/historical/${investmentDate}.json?app_id=${process.env.REACT_APP_API_KEY}`
       );
       const data = await response.json();
       setRateByDate(data.rates.BTC);
@@ -127,7 +127,13 @@ const MainPage = () => {
       setCalMonth(calMonth === 11 ? 0 : calMonth + 1);
       setCalYear(calMonth === 11 ? calYear + 1 : calYear);
     }
-  } 
+  }
+
+  const handleDateSelect = (date) => {
+    const formattedDate = dayjs(date).format('YYYY-MM-DD');
+    setInvestmentDate(formattedDate);
+    console.log("Selected Investment Date:", formattedDate);
+  };
 
   return (
     <div className="main">
@@ -159,7 +165,7 @@ const MainPage = () => {
               rightValue="2024"
               label="Investment date"
               onChange={handleSliderChange}
-              valueComponent={<Calendar month={calMonth} year={calYear} onChange={handleCalendarMonthChange}/>}
+              valueComponent={<Calendar month={calMonth} year={calYear} onChange={handleCalendarMonthChange} onDateSelect={handleDateSelect}/>}
 
               value={'ні на що не впливає'}
             />
